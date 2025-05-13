@@ -9,6 +9,7 @@ type DbStore = {
   transactions: Transaction[]
   getUserFromId: (id: string) => User
   getUsersFromList: (ids: string[]) => User[]
+  addTransaction: (transaction: Transaction) => void
 }
 
 export const useDb = create<DbStore>()(
@@ -21,6 +22,8 @@ export const useDb = create<DbStore>()(
         getUserFromId: (id) => get().users.find((user) => user.id === id)!,
         getUsersFromList: (ids) =>
           get().users.filter((user) => ids.includes(user.id)),
+        addTransaction: (transaction) =>
+          set({ transactions: [...get().transactions, transaction] }),
       }),
       {
         name: "database",

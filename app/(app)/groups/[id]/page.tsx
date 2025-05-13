@@ -1,5 +1,7 @@
 "use client"
 
+import { AddTransactionDialog } from "@/app/(app)/groups/[id]/_components/AddTransactionDialog"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { simplifyExpenses } from "@/db/helpers"
 import { useDb } from "@/store/useDb"
@@ -98,6 +100,12 @@ export default function Group() {
             </ul>
           </CardContent>
         </Card>
+
+        <AddTransactionDialog>
+          <Button className="fixed bottom-4 right-4" asChild>
+            <div>Adicionar transação</div>
+          </Button>
+        </AddTransactionDialog>
       </div>
     </div>
   )
