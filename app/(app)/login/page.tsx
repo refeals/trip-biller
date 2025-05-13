@@ -24,19 +24,24 @@ export default function Login() {
   }, [currentUser, router])
 
   return (
-    <div className="grid grid-cols-5 gap-4">
-      {users.map((user) => (
-        <Card key={user.id}>
-          <CardHeader>
-            <CardTitle>{user.username}</CardTitle>
-          </CardHeader>
-          <CardFooter className="flex justify-center">
-            <Button onClick={() => handleLogin(user.id)}>
-              Login with {user.username}
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
+    <>
+      <h2 className="text-2xl font-semibold">
+        Selecione um usuário para logar
+      </h2>
+      <div className="grid grid-cols-5 gap-4">
+        {users.map((user) => (
+          <Card key={user.id}>
+            <CardHeader>
+              <CardTitle>{user.username}</CardTitle>
+            </CardHeader>
+            <CardFooter className="flex justify-center">
+              <Button onClick={() => handleLogin(user.id)}>
+                Logar com {user.username}
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </>
   )
 }

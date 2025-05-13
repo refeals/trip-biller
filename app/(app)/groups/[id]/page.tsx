@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { simplifyExpenses } from "@/db/helpers"
 import { useDb } from "@/store/useDb"
 import { useParams, useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function Group() {
   const router = useRouter()
@@ -18,6 +18,8 @@ export default function Group() {
     getUsersFromList,
   } = useDb()
   const group = dbGroups.find((group) => group.id === params.id)
+
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   useEffect(() => {
     if (!group) {
@@ -59,14 +61,20 @@ export default function Group() {
               <ul>
                 {simplifiedExpenses.map((expense, i) => (
                   <li key={i}>
-                    <span className="font-bold">{expense.from}</span> deve{" "}
+                    <span className="font-bold">
+                      {getUserFromId(expense.from).username}
+                    </span>{" "}
+                    deve{" "}
                     <span className="font-bold">
                       {new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       }).format(expense.amount)}
                     </span>{" "}
-                    para <span className="font-bold">{expense.to}</span>
+                    para{" "}
+                    <span className="font-bold">
+                      {getUserFromId(expense.to).username}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -101,7 +109,7 @@ export default function Group() {
           </CardContent>
         </Card>
 
-        <AddTransactionDialog>
+        <AddTransactionDialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <Button className="fixed bottom-4 right-4" asChild>
             <div>Adicionar transação</div>
           </Button>
