@@ -1,4 +1,5 @@
-import { getUserFromId, type User } from "@/app/db"
+import { getUserFromId } from "@/db/helpers"
+import { User } from "@/db/types"
 import { create } from "zustand"
 
 interface CurrentUserState {

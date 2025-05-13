@@ -1,6 +1,8 @@
 "use client"
 
-import { db, getUserFromId, getUsersFromList, simplifyExpenses } from "@/app/db"
+import { Card, CardContent } from "@/components/ui/card"
+import { db } from "@/db"
+import { getUsersFromList, simplifyExpenses, getUserFromId } from "@/db/helpers"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -30,60 +32,66 @@ export default function Group() {
     <div className="space-y-4">
       <h2 className="text-2xl">Grupo: {group.name}</h2>
 
-      <div className="flex">
+      <div className="flex gap-4">
         <div className="flex-1 space-y-4">
-          <div>
-            <h3>Membros</h3>
-            <ul>
-              {members.map((member) => (
-                <li key={member.id}>{member.username}</li>
-              ))}
-            </ul>
-          </div>
+          <Card>
+            <CardContent className="space-y-2">
+              <h3 className="font-semibold text-xl">Membros</h3>
+              <ul>
+                {members.map((member) => (
+                  <li key={member.id}>{member.username}</li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
 
-          <div>
-            <h3>Despesas Simplificadas</h3>
+          <Card>
+            <CardContent className="space-y-2">
+              <h3 className="font-semibold text-xl">Despesas Simplificadas</h3>
+              <ul>
+                {simplifiedExpenses.map((expense, i) => (
+                  <li key={i}>
+                    <span className="font-bold">{expense.from}</span> deve{" "}
+                    <span className="font-bold">
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(expense.amount)}
+                    </span>{" "}
+                    para <span className="font-bold">{expense.to}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="flex-[2] h-fit">
+          <CardContent className="space-y-2">
+            <h3 className="font-semibold text-xl">Transações</h3>
+
             <ul>
-              {simplifiedExpenses.map((expense, i) => (
-                <li key={i}>
-                  <span className="font-bold">{expense.from}</span> deve{" "}
+              {transactions.map((transaction) => (
+                <li key={transaction.id}>
+                  <span className="font-bold">
+                    {getUserFromId(transaction.payerId).username}
+                  </span>{" "}
+                  pagou{" "}
                   <span className="font-bold">
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BRL",
-                    }).format(expense.amount)}
+                    }).format(transaction.amount)}
                   </span>{" "}
-                  para <span className="font-bold">{expense.to}</span>
+                  para{" "}
+                  <span className="font-bold">
+                    {getUserFromId(transaction.payeeId).username}
+                  </span>
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-
-        <div className="flex-[2] space-y-4">
-          <h3>Transações</h3>
-
-          <ul>
-            {transactions.map((transaction) => (
-              <li key={transaction.id}>
-                <span className="font-bold">
-                  {getUserFromId(transaction.payerId).username}
-                </span>{" "}
-                pagou{" "}
-                <span className="font-bold">
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(transaction.amount)}
-                </span>{" "}
-                para{" "}
-                <span className="font-bold">
-                  {getUserFromId(transaction.payeeId).username}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

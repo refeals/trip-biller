@@ -1,6 +1,6 @@
 "use client"
 
-import { db } from "@/app/db"
+import { db } from "@/db"
 import { Button } from "@/components/ui/button"
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useCurrentUserStore } from "@/store/currentUser"

@@ -1,92 +1,5 @@
-export type User = {
-  id: string
-  username: string
-}
-
-export type Group = {
-  id: string
-  name: string
-  memberIds: string[]
-  creatorId: string
-}
-
-export type Transaction = {
-  id: string
-  groupId: string
-  amount: number
-  payerId: string
-  payeeId: string
-  description: string
-}
-
-export type DB = {
-  users: User[]
-  groups: Group[]
-  transactions: Transaction[]
-}
-
-type SimplifiedTransfer = {
-  from: string
-  to: string
-  amount: number
-}
-
-export const db: DB = {
-  users: [
-    {
-      id: "1",
-      username: "johndoe",
-    },
-    {
-      id: "2",
-      username: "janedoe",
-    },
-    {
-      id: "3",
-      username: "bobsmith",
-    },
-  ],
-  groups: [
-    {
-      id: "1",
-      name: "Viagem de férias",
-      memberIds: ["1", "2"],
-      creatorId: "1",
-    },
-    {
-      id: "2",
-      name: "Grupo de amigos",
-      memberIds: ["1"],
-      creatorId: "1",
-    },
-  ],
-  transactions: [
-    {
-      id: "1",
-      groupId: "1",
-      amount: 100,
-      payerId: "1",
-      payeeId: "2",
-      description: "Split the bill",
-    },
-    {
-      id: "2",
-      groupId: "1",
-      amount: 50,
-      payerId: "2",
-      payeeId: "1",
-      description: "Split the bill",
-    },
-    {
-      id: "3",
-      groupId: "2",
-      amount: 200,
-      payerId: "1",
-      payeeId: "3",
-      description: "Split the bill",
-    },
-  ],
-}
+import { db } from "@/db"
+import type { Group, Transaction, User } from "@/db/types"
 
 export function getUserFromId(id: string): User {
   return db.users.find((user) => user.id === id)!
@@ -94,6 +7,12 @@ export function getUserFromId(id: string): User {
 
 export function getUsersFromList(ids: string[]): User[] {
   return db.users.filter((user) => ids.includes(user.id))
+}
+
+type SimplifiedTransfer = {
+  from: string
+  to: string
+  amount: number
 }
 
 export function simplifyExpenses(

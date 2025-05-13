@@ -1,6 +1,6 @@
 "use client"
 
-import { db } from "@/app/db"
+import { db } from "@/db"
 import { Card } from "@/components/ui/card"
 import { useCurrentUserStore } from "@/store/currentUser"
 import Link from "next/link"
@@ -23,6 +23,7 @@ export default function Groups() {
 
   return (
     <div className="grid grid-cols-1 gap-4">
+      <h2 className="text-2xl">Grupos</h2>
       {groups.length === 0 && <p>No groups found</p>}
       {groups.map((group) => (
         <Link key={group.id} href={`/groups/${group.id}`}>
