@@ -30,7 +30,7 @@ export default function Group() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl">Grupo: {group.name}</h2>
+      <h2 className="text-2xl font-semibold">{group.name}</h2>
 
       <div className="flex gap-4">
         <div className="flex-1 space-y-4">

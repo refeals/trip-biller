@@ -182,5 +182,13 @@ export const db: DB = {
       payeeId: "1",
       description: "Split the bill",
     },
+    {
+      id: "19",
+      groupId: "2",
+      amount: 90,
+      payerId: "4",
+      payeeId: "5",
+      description: "Split the bill",
+    },
   ],
 }

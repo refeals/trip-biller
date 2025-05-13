@@ -16,13 +16,13 @@ export default function Login() {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-5 gap-4">
       {db.users.map((user) => (
         <Card key={user.id}>
           <CardHeader>
             <CardTitle>{user.username}</CardTitle>
           </CardHeader>
-          <CardFooter>
+          <CardFooter className="flex justify-center">
             <Button onClick={() => handleLogin(user.id)}>
               Login with {user.username}
             </Button>
