@@ -2,7 +2,7 @@
 
 import { ModeToggle } from "@/components/mode-toggle"
 import { Button } from "@/components/ui/button"
-import { useCurrentUserStore } from "@/store/currentUser"
+import { useCurrentUser } from "@/store/useCurrentUser"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -12,7 +12,7 @@ export default function MainLayout({
   children: React.ReactNode
 }) {
   const router = useRouter()
-  const { currentUser, clearUser } = useCurrentUserStore()
+  const { currentUser, clearUser } = useCurrentUser()
 
   const handleClearUser = () => {
     clearUser()

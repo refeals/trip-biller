@@ -1,6 +1,6 @@
 import { DB } from "@/db/types"
 
-export const db: DB = {
+export const initialDb: DB = {
   users: [
     {
       id: "1",

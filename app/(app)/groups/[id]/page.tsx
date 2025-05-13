@@ -1,15 +1,21 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { db } from "@/db"
-import { getUsersFromList, simplifyExpenses, getUserFromId } from "@/db/helpers"
+import { simplifyExpenses } from "@/db/helpers"
+import { useDb } from "@/store/useDb"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function Group() {
   const router = useRouter()
   const params = useParams()
-  const group = db.groups.find((group) => group.id === params.id)
+  const {
+    groups: dbGroups,
+    transactions: dbTransactions,
+    getUserFromId,
+    getUsersFromList,
+  } = useDb()
+  const group = dbGroups.find((group) => group.id === params.id)
 
   useEffect(() => {
     if (!group) {
@@ -22,7 +28,7 @@ export default function Group() {
   }
 
   const members = getUsersFromList(group.memberIds)
-  const transactions = db.transactions.filter(
+  const transactions = dbTransactions.filter(
     (transaction) => transaction.groupId === group.id
   )
 

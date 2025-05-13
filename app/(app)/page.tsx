@@ -1,11 +1,11 @@
 "use client"
 
-import { useCurrentUserStore } from "@/store/currentUser"
+import { useCurrentUser } from "@/store/useCurrentUser"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function Home() {
-  const { currentUser } = useCurrentUserStore()
+  const { currentUser } = useCurrentUser()
   const router = useRouter()
 
   useEffect(() => {

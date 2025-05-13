@@ -1,17 +1,18 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { db } from "@/db"
-import { useCurrentUserStore } from "@/store/currentUser"
+import { useCurrentUser } from "@/store/useCurrentUser"
+import { useDb } from "@/store/useDb"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function Groups() {
-  const { currentUser } = useCurrentUserStore()
+  const { currentUser } = useCurrentUser()
   const router = useRouter()
+  const { groups: dbGroups } = useDb()
 
-  const groups = db.groups.filter((group) =>
+  const groups = dbGroups.filter((group) =>
     group.memberIds.includes(currentUser ? currentUser.id : "")
   )
 

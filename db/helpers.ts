@@ -1,13 +1,4 @@
-import { db } from "@/db"
-import type { Group, Transaction, User } from "@/db/types"
-
-export function getUserFromId(id: string): User {
-  return db.users.find((user) => user.id === id)!
-}
-
-export function getUsersFromList(ids: string[]): User[] {
-  return db.users.filter((user) => ids.includes(user.id))
-}
+import type { Group, Transaction } from "@/db/types"
 
 type SimplifiedTransfer = {
   from: string
@@ -61,8 +52,8 @@ export function simplifyExpenses(
     const transferAmount = Math.min(creditor.amount, debtor.amount)
 
     result.push({
-      from: getUserFromId(debtor.id).username,
-      to: getUserFromId(creditor.id).username,
+      from: debtor.id,
+      to: creditor.id,
       amount: transferAmount,
     })
 
