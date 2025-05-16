@@ -1,6 +1,7 @@
 "use client"
 
 import { AddTransactionDialog } from "@/app/(app)/groups/[id]/_components/AddTransactionDialog"
+import { AddMemberDialog } from "@/app/(app)/groups/[id]/_components/AddMemberDialog"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { simplifyExpenses } from "@/db/helpers"
@@ -20,6 +21,7 @@ export default function Group() {
   const group = dbGroups.find((group) => group.id === params.id)
 
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [memberDialogOpen, setMemberDialogOpen] = useState(false)
 
   useEffect(() => {
     if (!group) {
@@ -47,6 +49,16 @@ export default function Group() {
           <Card>
             <CardContent className="space-y-2">
               <h3 className="font-semibold text-xl">Membros</h3>
+
+              <AddMemberDialog
+                open={memberDialogOpen}
+                onOpenChange={setMemberDialogOpen}
+              >
+                <Button asChild>
+                  <div>Adicionar membro</div>
+                </Button>
+              </AddMemberDialog>
+
               <ul>
                 {members.map((member) => (
                   <li key={member.id}>{member.username}</li>

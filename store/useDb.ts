@@ -11,6 +11,7 @@ type DbStore = {
   getUsersFromList: (ids: string[]) => User[]
   addTransaction: (transaction: Omit<Transaction, "id">) => void
   addGroup: (name: Group["name"], userId: User["id"]) => void
+  addMemberToGroup: (groupId: Group["id"], username: User["username"]) => void
 }
 
 export const useDb = create<DbStore>()(
@@ -42,6 +43,25 @@ export const useDb = create<DbStore>()(
               },
             ],
           }),
+        addMemberToGroup: (groupId, username) => {
+          const user = get().users.find((user) => user.username === username)
+
+          if (!user) {
+            return
+          }
+
+          set({
+            groups: get().groups.map((group) => {
+              if (group.id === groupId) {
+                return {
+                  ...group,
+                  memberIds: [...group.memberIds, user.id],
+                }
+              }
+              return group
+            }),
+          })
+        },
       }),
       {
         name: "database",
