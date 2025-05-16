@@ -9,6 +9,7 @@ type DbStore = {
   transactions: Transaction[]
   getUserFromId: (id: string) => User
   getUsersFromList: (ids: string[]) => User[]
+  getOrCreateUser: (username: string) => User
   addTransaction: (transaction: Omit<Transaction, "id">) => void
   addGroup: (name: Group["name"], userId: User["id"]) => void
   addMemberToGroup: (groupId: Group["id"], username: User["username"]) => void
@@ -24,6 +25,20 @@ export const useDb = create<DbStore>()(
         getUserFromId: (id) => get().users.find((user) => user.id === id)!,
         getUsersFromList: (ids) =>
           get().users.filter((user) => ids.includes(user.id)),
+        getOrCreateUser: (username) => {
+          const user = get().users.find((user) => user.username === username)
+
+          if (user) {
+            return user
+          } else {
+            const newUser = {
+              id: crypto.randomUUID(),
+              username,
+            }
+            set({ users: [...get().users, newUser] })
+            return newUser
+          }
+        },
         addTransaction: (transaction) =>
           set({
             transactions: [

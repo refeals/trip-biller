@@ -34,7 +34,9 @@ export default function Groups() {
         </Button>
       </CreateGroupDialog>
 
-      {groups.length === 0 && <p>No groups found</p>}
+      {groups.length === 0 && (
+        <p>Nenhum grupo encontrado. Crie um novo {"->"}</p>
+      )}
 
       <div className="flex flex-col items-center gap-3">
         {groups.map((group) => (

@@ -16,9 +16,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { useDb } from "@/store/useDb"
 import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select"
 import { useParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -36,10 +42,13 @@ export function AddMemberDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  const { addMemberToGroup } = useDb()
+  const { addMemberToGroup, users, groups } = useDb()
   const params = useParams()
 
   const groupId = params.id as string
+  const group = groups.find((group) => group.id === groupId)!
+
+  const notMembers = users.filter((user) => !group.memberIds.includes(user.id))
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,6 +58,7 @@ export function AddMemberDialog({
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
     addMemberToGroup(groupId, values.username)
     form.reset()
     onOpenChange(false)
@@ -60,7 +70,9 @@ export function AddMemberDialog({
 
       <DialogContent>
         <DialogHeader className="space-y-3">
-          <DialogTitle>Criar grupo</DialogTitle>
+          <DialogTitle>
+            Adicionar membro no grupo &quot;{group.name}&quot;
+          </DialogTitle>
           <div className="space-y-2">
             <Form {...form}>
               <form
@@ -75,7 +87,21 @@ export function AddMemberDialog({
                       <FormItem>
                         <FormLabel>Username do usuário</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Select
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {notMembers.map((user) => (
+                                <SelectItem key={user.id} value={user.username}>
+                                  {user.username}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </FormControl>
                         <FormMessage />
                       </FormItem>

@@ -27,11 +27,11 @@ export default function MainLayout({
             <Link href="/">Trip Biller</Link>
           </span>
 
-          <p>Current user: {currentUser?.username}</p>
+          <p>Bem-vindo(a): {currentUser?.username}</p>
 
           <div className="flex gap-2 items-center">
             <ModeToggle />
-            {currentUser && <Button onClick={handleClearUser}>Logout</Button>}
+            {currentUser && <Button onClick={handleClearUser}>Sair</Button>}
           </div>
         </div>
       </header>
