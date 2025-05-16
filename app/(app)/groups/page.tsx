@@ -1,16 +1,18 @@
 "use client"
 
+import { CreateGroupDialog } from "@/app/(app)/groups/_components/CreateGroupDialog"
 import { Button } from "@/components/ui/button"
 import { useCurrentUser } from "@/store/useCurrentUser"
 import { useDb } from "@/store/useDb"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function Groups() {
   const { currentUser } = useCurrentUser()
   const router = useRouter()
   const { groups: dbGroups } = useDb()
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   const groups = dbGroups.filter((group) =>
     group.memberIds.includes(currentUser ? currentUser.id : "")
@@ -23,8 +25,14 @@ export default function Groups() {
   }, [currentUser, router])
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-4 relative">
       <h2 className="text-2xl">Grupos</h2>
+
+      <CreateGroupDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <Button className="absolute top-4 right-4" asChild>
+          <div>Novo grupo</div>
+        </Button>
+      </CreateGroupDialog>
 
       {groups.length === 0 && <p>No groups found</p>}
 

@@ -82,9 +82,18 @@ export default function Group() {
           </Card>
         </div>
 
-        <Card className="flex-[2] h-fit">
+        <Card className="flex-[2] h-fit relative">
           <CardContent className="space-y-2">
             <h3 className="font-semibold text-xl">Transações</h3>
+
+            <AddTransactionDialog
+              open={dialogOpen}
+              onOpenChange={setDialogOpen}
+            >
+              <Button className="absolute top-4 right-4" asChild>
+                <div>Adicionar transação</div>
+              </Button>
+            </AddTransactionDialog>
 
             <ul>
               {transactions.map((transaction) => (
@@ -108,12 +117,6 @@ export default function Group() {
             </ul>
           </CardContent>
         </Card>
-
-        <AddTransactionDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <Button className="fixed bottom-4 right-4" asChild>
-            <div>Adicionar transação</div>
-          </Button>
-        </AddTransactionDialog>
       </div>
     </div>
   )

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -65,7 +64,6 @@ export function AddTransactionDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     addTransaction({
-      id: crypto.randomUUID(),
       groupId: group!.id,
       payerId: values.payerId,
       payeeId: values.payeeId,
@@ -83,7 +81,7 @@ export function AddTransactionDialog({
       <DialogContent>
         <DialogHeader className="space-y-3">
           <DialogTitle>Adicionar transação</DialogTitle>
-          <DialogDescription className="space-y-2">
+          <div className="space-y-2">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -185,7 +183,7 @@ export function AddTransactionDialog({
                 </div>
               </form>
             </Form>
-          </DialogDescription>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>
