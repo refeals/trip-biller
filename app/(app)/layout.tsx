@@ -21,19 +21,23 @@ export default function MainLayout({
 
   return (
     <main className="h-full flex flex-col">
-      <header className="border-b py-4 px-8 flex justify-between items-center">
-        <span className="font-bold">
-          <Link href="/">Trip Biller</Link>
-        </span>
+      <header className="border-b py-4 px-8 flex justify-center">
+        <div className="flex justify-between items-center max-w-[1440px] w-full">
+          <span className="font-bold">
+            <Link href="/">Trip Biller</Link>
+          </span>
 
-        <p>Current user: {currentUser?.username}</p>
+          <p>Current user: {currentUser?.username}</p>
 
-        <div className="flex gap-2 items-center">
-          <ModeToggle />
-          {currentUser && <Button onClick={handleClearUser}>Logout</Button>}
+          <div className="flex gap-2 items-center">
+            <ModeToggle />
+            {currentUser && <Button onClick={handleClearUser}>Logout</Button>}
+          </div>
         </div>
       </header>
-      <section className="p-8 flex-1 text-center space-y-8">{children}</section>
+      <section className="pt-8 flex-1 text-center space-y-8 max-w-[1440px] w-full self-center">
+        {children}
+      </section>
     </main>
   )
 }
